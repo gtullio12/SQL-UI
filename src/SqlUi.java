@@ -6,6 +6,9 @@ import java.util.Arrays;
 
 public class SqlUi extends JFrame{
 
+    /** SQL Connection object. Used for querying database **/
+    private SqlConnect sqlConnect = new SqlConnect();
+
     /** Text to identify the query components **/
     private JLabel customerText = new JLabel("Customer");
     private JLabel accountText = new JLabel("Checking Account");
