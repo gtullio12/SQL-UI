@@ -1,18 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
-public class SQL_UI extends JFrame{
+public class SqlUi extends JFrame{
+
+    /** Text to identify the query components **/
+    private JLabel customerText = new JLabel("Customer");
+    private JLabel accountText = new JLabel("Checking Account");
 
     /** Panel for customer queries **/
     private JPanel customerPanel = new JPanel();
-
-    /** Panel for Checking/Savings account queries **/
-    private JPanel moneyAccountPanel = new JPanel();
 
     /** text boxes for customer panel **/
     private JTextField customerID = new JTextField("Customer ID");
@@ -32,21 +31,34 @@ public class SQL_UI extends JFrame{
                     studentLoanNumber,address,DOB,gender,creditScore,email)
     );
 
+    /** Components for checking account queries **/
+    private JPanel checkingAccountPanel = new JPanel();
+    private JTextField accountNumber = new JTextField("Account Number");
+    private JTextField balance = new JTextField("Balance");
+    private JTextField customerIDAccount = new JTextField("Customer ID");
+
     /** Components for selecting SQL operation **/
     private String[] operations = {"SELECT", "INSERT", "UPDATE", "DELETE"};
-    private JComboBox operationsBox = new JComboBox(operations);
+    private JComboBox operationsBoxCustomer = new JComboBox(operations);
+    private JComboBox operationsBoxAccount = new JComboBox(operations);
 
     /** Area to display Query results **/
     private JTextArea displayResults = new JTextArea();
 
-    public SQL_UI() {
-        setLayout(new GridLayout(3,1));
-        setSize(new Dimension(1000,1000));
+    public SqlUi() {
+        setLayout(new GridLayout(5,1));
+        setSize(new Dimension(600,400));
         setVisible(true);
         createCustomerPanel();
         createMoneyAccountPanel();
+        customerText.setEnabled(false);
+        customerText.setHorizontalAlignment(SwingConstants.CENTER);
+        accountText.setHorizontalAlignment(SwingConstants.CENTER);
+        add(customerText);
         add(customerPanel);
-        add(moneyAccountPanel);
+        accountText.setEnabled(false);
+        add(accountText);
+        add(checkingAccountPanel);
         displayResults.setEnabled(false);
         add(displayResults);
     }
@@ -54,26 +66,20 @@ public class SQL_UI extends JFrame{
     private void createCustomerPanel() {
         customerPanel.setLayout(new GridLayout(3,13));
         components.forEach(component -> {
-            component.addFocusListener(new FocusListener() {
-                private String field;
-                @Override
-                public void focusGained(FocusEvent e) {
-                    field = component.getText();
-                    component.setText("");
-                }
-
-                @Override
-                public void focusLost(FocusEvent e) {
-                    component.setText(field);
-                }
-            });
-
+            component.addFocusListener(new Focus(component));
         });
         components.forEach(component -> customerPanel.add(component));
-        customerPanel.add(operationsBox);
+        customerPanel.add(operationsBoxCustomer);
     }
 
     private void createMoneyAccountPanel() {
-
+        checkingAccountPanel.setLayout(new GridLayout(1,4));
+        accountNumber.addFocusListener(new Focus(accountNumber));
+        balance.addFocusListener(new Focus(balance));
+        customerIDAccount.addFocusListener(new Focus(customerIDAccount));
+        checkingAccountPanel.add(accountNumber);
+        checkingAccountPanel.add(balance);
+        checkingAccountPanel.add(customerIDAccount);
+        checkingAccountPanel.add(operationsBoxAccount);
     }
 }
