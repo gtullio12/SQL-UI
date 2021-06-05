@@ -107,7 +107,12 @@ public class SqlUi extends JFrame{
                 });
                 buildQuery[0] = buildQuery[0].substring(0, buildQuery[0].length() - 1); // Remove comma at the end
                 buildQuery[0] += ")";
+                System.out.println(buildQuery[0]);
                 SqlConnect.executeCustomerUpdate(buildQuery[0]);
+
+                // Display the result table of the insert
+                buildQuery[0] = "SELECT * FROM Customer";
+                result = SqlConnect.executeCustomerQuery(buildQuery[0]);
         }
         System.out.println(buildQuery[0]);
         return result;
