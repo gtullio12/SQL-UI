@@ -36,7 +36,6 @@ public class SqlConnect {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(databaseURL, databaseUsername, databasePassword);
             Statement statement = connection.createStatement();
-            int resultSet = statement.executeUpdate(query);
             connection.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
