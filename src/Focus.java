@@ -17,6 +17,7 @@ public class Focus implements FocusListener {
 
     @Override
     public void focusLost(FocusEvent e) {
-        component.setText(field);
+        if (component.getText().isEmpty())
+            component.setText(field);
     }
 }
